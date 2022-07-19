@@ -1,8 +1,7 @@
 package io.mimsoft
 
-import com.example.utils.plugins.configureRouting
 import com.example.utils.configureSerialization
-import io.ktor.server.application.*
+import com.example.utils.plugins.configureRouting
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.mimsoft.utils.plugins.configureMonitoring
