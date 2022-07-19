@@ -1,5 +1,6 @@
-package com.example.questions
+package io.mimsoft.questions
 
+import com.example.questions.QuestionsModel
 import io.mimsoft.utils.ContentModel
 import io.mimsoft.utils.DBManager
 import io.mimsoft.utils.sendPreparedStatementAwait
