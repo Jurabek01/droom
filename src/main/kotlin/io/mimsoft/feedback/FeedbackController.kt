@@ -55,8 +55,8 @@ object FeedbackController {
     }
 
     suspend fun add(feedback: FeedbackModel?): Boolean{
-        val query = "insert into feedback (priority, " +
-                "name_uz, name_ru, name_eng, " +
+        val query = "insert into feedback " +
+                "(priority, name_uz, name_ru, name_eng, \n " +
                 "body_uz, body_ru, body_eng, " +
                 "image) values (${feedback?.priority} ,\n" +
                 "?, ?, ?, ?, ?, ?, ?)"
