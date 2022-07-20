@@ -48,8 +48,6 @@ object FeedbackController {
                     eng = it.getString("body_eng"),
                 ),
                 image = it.getString("image")
-
-
             )
         }
     }

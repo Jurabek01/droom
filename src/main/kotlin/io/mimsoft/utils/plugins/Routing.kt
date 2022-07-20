@@ -9,6 +9,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.mimsoft.about.routeToAbout
 import io.mimsoft.contact.routeToContact
+import io.mimsoft.service.routeToService
 
 fun Application.configureRouting() {
 
@@ -23,6 +24,7 @@ fun Application.configureRouting() {
             routeToSocial()
             routeToAbout()
             routeToContact()
+            routeToService()
         }
 
 
