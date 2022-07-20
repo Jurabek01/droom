@@ -19,7 +19,7 @@ object AboutController {
                 text1 = ContentModel(
                     uz = it.getString("text1_uz"),
                     ru = it.getString("text1_ru"),
-                    eng = it.getString("text1_end"),
+                    eng = it.getString("text1_eng"),
                 ),
                 number2 =  it.getInt("number2"),
                 text2 = ContentModel(

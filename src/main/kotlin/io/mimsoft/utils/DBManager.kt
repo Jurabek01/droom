@@ -7,9 +7,9 @@ object DBManager {
     private val dbConnection by lazy {
         return@lazy PostgreSQLConnectionBuilder.createConnectionPool {
             username = "postgres"
-            host = "89.223.124.220"
+            host = "109.68.212.187"
             port = 5432
-            password = "!#@mimsoft!#@"
+            password = "123dreamarch321"
             database = "dreamarch"
             maxActiveConnections = 2
             maxIdleTime = TimeUnit.MINUTES.toMillis(1)
