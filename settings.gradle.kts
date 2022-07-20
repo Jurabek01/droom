@@ -1,1 +1,1 @@
-rootProject.name = "io.mimsoft.dreamarch"
+rootProject.name = "dreamarch"
