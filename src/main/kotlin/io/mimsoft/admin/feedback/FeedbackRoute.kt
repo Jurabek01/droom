@@ -1,4 +1,4 @@
-package io.mimsoft.feedback
+package io.mimsoft.admin.feedback
 
 import io.ktor.http.*
 import io.ktor.server.application.*
