@@ -6,7 +6,7 @@ import io.mimsoft.utils.sendPreparedStatementAwait
 
 object ServiceController {
 
-    suspend fun getAll(): List<ServiceModel>{
+    suspend fun getAll(): List<ServiceModel?>{
         val query = "select * from service order by priority"
 
         return DBManager.getConnection().sendPreparedStatementAwait(query, arrayListOf()).rows.map {
