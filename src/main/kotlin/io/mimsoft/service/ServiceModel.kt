@@ -6,5 +6,6 @@ data class ServiceModel(
     val id: Long? = null,
     val title: ContentModel? = null,
     val body: ContentModel? = null,
-    val priority: ContentModel? = null
+    val priority: ContentModel? = null,
+    val idDeleted : Boolean = false
 )
