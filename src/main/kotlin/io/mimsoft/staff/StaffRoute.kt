@@ -31,7 +31,6 @@ fun Route.routeToStaff() {
     }
     authenticate("admin") {
         route("/staff") {
-            // api/v1/staff
             post {
                 val staff = call.receive<StaffModel>()
                 StaffController.add(staff)
