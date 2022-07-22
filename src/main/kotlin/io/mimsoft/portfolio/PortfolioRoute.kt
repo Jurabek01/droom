@@ -2,6 +2,7 @@ package io.mimsoft.portfolio
 
 import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -31,23 +32,27 @@ fun Route.routeToPortfolio() {
             call.respond(HttpStatusCode.BadRequest)
     }
 
-    route("/portfolio"){
-        post {
-            val portfolio = call.receive<PortfolioModel>()
-            PortfolioController.add(portfolio)
-            call.respond(HttpStatusCode.OK)
-        }
+    authenticate ("admin") {
 
-        put {
-            val portfolio = call.receive<PortfolioModel>()
-            PortfolioController.edit(portfolio)
-            call.respond(HttpStatusCode.OK)
-        }
 
-        delete {
-            val portfolio = call.receive<PortfolioModel>()
-            PortfolioController.delete(portfolio)
-            call.respond(HttpStatusCode.OK)
+        route("/portfolio") {
+            post {
+                val portfolio = call.receive<PortfolioModel>()
+                PortfolioController.add(portfolio)
+                call.respond(HttpStatusCode.OK)
+            }
+
+            put {
+                val portfolio = call.receive<PortfolioModel>()
+                PortfolioController.edit(portfolio)
+                call.respond(HttpStatusCode.OK)
+            }
+
+            delete {
+                val portfolio = call.receive<PortfolioModel>()
+                PortfolioController.delete(portfolio)
+                call.respond(HttpStatusCode.OK)
+            }
         }
     }
 }

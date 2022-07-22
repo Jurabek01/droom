@@ -3,6 +3,7 @@ package io.mimsoft.admin
 import io.mimsoft.session.SessionController
 import io.mimsoft.session.SessionModel
 import io.mimsoft.utils.DBManager
+import io.mimsoft.utils.JWTConfig
 import io.mimsoft.utils.sendPreparedStatementAwait
 import java.util.*
 import kotlin.collections.ArrayList
@@ -29,7 +30,7 @@ object AdminController {
 
     suspend fun getAdmin(id: Int? = null, username: String? = null): AdminModel? {
         val arrayList = arrayListOf<String?>()
-        val query = "select * from admin where +" +
+        val query = "select * from admin where " +
                 if (id != null)
                     "id = $id"
                 else {
@@ -92,7 +93,7 @@ object AdminController {
                 id = it.getInt("id"),
                 username = it.getString("username"),
                 password = it.getString("password"),
-//                token = JWTConfig.makeTokenAdmin(it.getInt("id"), username, sessionUuid)
+                token = JWTConfig.makeTokenAdmin(it.getInt("id"), username, sessionUuid)
             )
         }
 

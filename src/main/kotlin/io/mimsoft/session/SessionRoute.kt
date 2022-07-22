@@ -6,7 +6,7 @@ import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.mimsoft.utils.plugins.AdminPrincipal
+import io.mimsoft.utils.AdminPrincipal
 
 
 fun Route.routeToSession() {

@@ -1,4 +1,4 @@
-package io.mimsoft.admin.feedback
+package io.mimsoft.feedback
 
 import io.mimsoft.utils.ContentModel
 import io.mimsoft.utils.DBManager

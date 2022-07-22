@@ -2,6 +2,7 @@ package com.example.questions.social
 
 import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -28,24 +29,27 @@ fun Route.routeToSocial(){
         }else
             call.respond(HttpStatusCode.BadRequest)
     }
+    authenticate ("admin") {
 
-    route("/social") {
-        post {
-            val social = call.receive<SocialModel>()
-            SocialController.add(social)
-            call.respond(HttpStatusCode.OK)
-        }
 
-        put {
-            val social = call.receive<SocialModel>()
-            SocialController.edit(social)
-            call.respond(HttpStatusCode.OK)
-        }
+        route("/social") {
+            post {
+                val social = call.receive<SocialModel>()
+                SocialController.add(social)
+                call.respond(HttpStatusCode.OK)
+            }
 
-        delete {
-            val social = call.receive<SocialModel>()
-            SocialController.delete(social)
-            call.respond(HttpStatusCode.OK)
+            put {
+                val social = call.receive<SocialModel>()
+                SocialController.edit(social)
+                call.respond(HttpStatusCode.OK)
+            }
+
+            delete {
+                val social = call.receive<SocialModel>()
+                SocialController.delete(social)
+                call.respond(HttpStatusCode.OK)
+            }
         }
     }
 }

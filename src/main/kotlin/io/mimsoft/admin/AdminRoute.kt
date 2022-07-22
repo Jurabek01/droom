@@ -9,7 +9,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.mimsoft.session.SessionController
 import io.mimsoft.session.SessionModel
-import io.mimsoft.utils.plugins.AdminPrincipal
+import io.mimsoft.utils.AdminPrincipal
 
 
 fun Route.routeToAdmin() {

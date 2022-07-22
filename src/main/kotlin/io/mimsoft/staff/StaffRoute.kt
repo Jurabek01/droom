@@ -1,11 +1,12 @@
-package com.example.staff
+package io.mimsoft.staff
 
+import com.example.staff.StaffController
 import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import io.mimsoft.staff.StaffModel
 
 fun Route.routeToStaff() {
 
@@ -28,30 +29,28 @@ fun Route.routeToStaff() {
         } else
             call.respond(HttpStatusCode.BadRequest)
     }
+    authenticate("admin") {
+        route("/staff") {
+            // api/v1/staff
+            post {
+                val staff = call.receive<StaffModel>()
+                StaffController.add(staff)
+                call.respond(HttpStatusCode.OK)
+            }
 
-//    authenticate("admin") {
+            put {
+                val staff = call.receive<StaffModel>()
+                StaffController.edit(staff)
+                call.respond(HttpStatusCode.OK)
+            }
 
-    route("/staff") {
-        // api/v1/staff
-        post {
-            val staff = call.receive<StaffModel>()
-            StaffController.add(staff)
-            call.respond(HttpStatusCode.OK)
+            delete {
+                val staff = call.receive<StaffModel>()
+                StaffController.delete(staff)
+                call.respond(HttpStatusCode.OK)
+            }
+
         }
-
-        put {
-            val staff = call.receive<StaffModel>()
-            StaffController.edit(staff)
-            call.respond(HttpStatusCode.OK)
-        }
-
-        delete {
-            val staff = call.receive<StaffModel>()
-            StaffController.delete(staff)
-            call.respond(HttpStatusCode.OK)
-        }
-
     }
-//    }
 
 }

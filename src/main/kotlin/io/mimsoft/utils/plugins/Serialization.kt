@@ -1,4 +1,4 @@
-package com.example.utils
+package io.mimsoft.utils.plugins
 
 import io.ktor.serialization.gson.*
 import io.ktor.server.application.*

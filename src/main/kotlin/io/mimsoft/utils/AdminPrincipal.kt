@@ -1,4 +1,4 @@
-package io.mimsoft.utils.plugins
+package io.mimsoft.utils
 
 import io.ktor.server.auth.*
 

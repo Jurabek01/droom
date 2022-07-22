@@ -11,7 +11,6 @@ object DBManager {
             port = 5432
             password = "123dreamarch321"
             database = "postgres"
-            maxActiveConnections = 2
             maxActiveConnections = 20
             maxIdleTime = TimeUnit.MINUTES.toMillis(1)
             maxPendingQueries = 100_000

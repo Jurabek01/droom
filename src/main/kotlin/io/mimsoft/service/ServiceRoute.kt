@@ -2,6 +2,7 @@ package io.mimsoft.service
 
 import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -31,24 +32,28 @@ fun Route.routeToService() {
 
     }
 
-    route("/service") {
+    authenticate ("admin") {
 
-        post {
-            val service = call.receive<ServiceModel>()
-            ServiceController.add(service)
-            call.respond(HttpStatusCode.OK)
-        }
 
-        put {
-            val service = call.receive<ServiceModel>()
-            ServiceController.edit(service)
-            call.respond(HttpStatusCode.OK)
-        }
+        route("/service") {
 
-        delete {
-            val service = call.receive<ServiceModel>()
-            ServiceController.delete(service)
-            call.respond(HttpStatusCode.OK)
+            post {
+                val service = call.receive<ServiceModel>()
+                ServiceController.add(service)
+                call.respond(HttpStatusCode.OK)
+            }
+
+            put {
+                val service = call.receive<ServiceModel>()
+                ServiceController.edit(service)
+                call.respond(HttpStatusCode.OK)
+            }
+
+            delete {
+                val service = call.receive<ServiceModel>()
+                ServiceController.delete(service)
+                call.respond(HttpStatusCode.OK)
+            }
         }
     }
 }

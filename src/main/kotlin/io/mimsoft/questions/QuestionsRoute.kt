@@ -2,6 +2,7 @@ package com.example.questions
 
 import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -30,23 +31,27 @@ fun Route.routeToQuestions(){
             call.respond(HttpStatusCode.BadRequest)
     }
 
-    route("/question") {
-        post {
-            val question = call.receive<QuestionsModel>()
-            QuestionController.add(question)
-            call.respond(HttpStatusCode.OK)
-        }
+    authenticate("admin") {
 
-        put {
-            val question = call.receive<QuestionsModel>()
-            QuestionController.edit(question)
-            call.respond(HttpStatusCode.OK)
-        }
 
-        delete {
-            val question = call.receive<QuestionsModel>()
-            QuestionController.delete(question)
-            call.respond(HttpStatusCode.OK)
+        route("/question") {
+            post {
+                val question = call.receive<QuestionsModel>()
+                QuestionController.add(question)
+                call.respond(HttpStatusCode.OK)
+            }
+
+            put {
+                val question = call.receive<QuestionsModel>()
+                QuestionController.edit(question)
+                call.respond(HttpStatusCode.OK)
+            }
+
+            delete {
+                val question = call.receive<QuestionsModel>()
+                QuestionController.delete(question)
+                call.respond(HttpStatusCode.OK)
+            }
         }
     }
 }

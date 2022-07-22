@@ -2,6 +2,7 @@ package io.mimsoft.header
 
 import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -17,8 +18,8 @@ fun Route.routeToHeader() {
             call.respond(HttpStatusCode.NoContent)
     }
 
-    route("/header"){
-        post {
+    authenticate("admin") {
+        put("/header") {
             val head = call.receive<HeaderModel>()
             HeaderController.add(head)
             call.respond(HttpStatusCode.OK)
