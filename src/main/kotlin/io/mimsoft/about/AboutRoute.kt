@@ -19,7 +19,7 @@ fun Route.routeToAbout() {
     }
 
     authenticate("admin"){
-        post("/about") {
+        put("/about") {
             val about = call.receive<AboutModel>()
             AboutController.add(about)
             call.respond(HttpStatusCode.OK)
