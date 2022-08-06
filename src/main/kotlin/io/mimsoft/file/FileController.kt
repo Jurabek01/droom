@@ -7,7 +7,7 @@ import java.util.*
 
 object FileController {
 
-    private const val PATH = "/var/www/data"
+    private const val PATH = "/var/www/data/dreamarch"
     private const val template = "yyyy-MM-dd-HH-mm-ss-SSS"
 
     const val IMAGE = "images"
