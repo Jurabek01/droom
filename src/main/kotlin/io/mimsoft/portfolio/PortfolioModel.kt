@@ -7,7 +7,8 @@ data class PortfolioModel(
     val priority: Int? = null,
     val title: ContentModel? = null,
     val body: ContentModel? = null,
-    val image: String? = null
+    val image: String? = null,
+    val serviceId : Int? = null
 )
 
  
