@@ -1,6 +1,6 @@
 package io.mimsoft.service
 
-import io.mimsoft.adventures.AdventuresModel
+import io.mimsoft.advantege.AdvantageModel
 import io.mimsoft.portfolio.PortfolioModel
 import io.mimsoft.utils.ContentModel
 
@@ -13,5 +13,6 @@ data class ServiceModel(
     val header : ContentModel? = null,
     val priority: Int? = null,
     val portfolios : List<PortfolioModel?>? = null,
-    val adventures : List<AdventuresModel?>? = null,
+    val advantages : List<AdvantageModel?>? = null,
+    val image : String? = null
 )

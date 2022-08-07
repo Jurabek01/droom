@@ -8,7 +8,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.mimsoft.about.routeToAbout
 import io.mimsoft.admin.routeToAdmin
-import io.mimsoft.adventures.routToAdventure
+import io.mimsoft.advantege.routToAdventure
 import io.mimsoft.contact.routeToContact
 import io.mimsoft.feedback.routeToFeedback
 import io.mimsoft.file.routeToFile

@@ -1,7 +1,7 @@
 package io.mimsoft.service
 
-import io.mimsoft.adventures.AdventuresController
-import io.mimsoft.adventures.AdventuresModel
+import io.mimsoft.advantege.AdvantageController
+import io.mimsoft.advantege.AdvantageModel
 import io.mimsoft.portfolio.PortfolioController
 import io.mimsoft.utils.ContentModel
 import io.mimsoft.utils.DBManager
@@ -10,7 +10,7 @@ import io.mimsoft.utils.sendPreparedStatementAwait
 object ServiceController {
 
     suspend fun getAll(): List<ServiceModel?> {
-        val query = "select * from service order by priority"
+        val query = "select * from service where not is_deleted order by priority "
 
         return DBManager.getConnection().sendPreparedStatementAwait(query, arrayListOf()).rows.map {
             ServiceModel(
@@ -42,13 +42,14 @@ object ServiceController {
                 ),
                 priority = it.getInt("priority"),
                 portfolios = PortfolioController.getAll(serviceId = it.getInt("id")),
-                adventures = AdventuresController.getAll(serviceId = it.getInt("id"))
+                advantages = AdvantageController.getAll(serviceId = it.getInt("id")),
+                image = it.getString("image")
             )
         }
     }
 
     suspend fun get(id: Int?): ServiceModel? {
-        val query = "select * from service where id = $id"
+        val query = "select * from service where id = $id and not is_deleted"
 
         return DBManager.getConnection().sendPreparedStatementAwait(query, arrayListOf()).rows.getOrNull(0)?.let {
             ServiceModel(
@@ -79,8 +80,9 @@ object ServiceController {
                     eng = it.getString("hint_eng"),
                 ),
                 priority = it.getInt("priority"),
-                adventures = AdventuresController.getAll(serviceId = id),
-                portfolios = PortfolioController.getAll(serviceId = id)
+                advantages = AdvantageController.getAll(serviceId = id),
+                portfolios = PortfolioController.getAll(serviceId = id),
+                image = it.getString("image")
             )
         }
     }
@@ -92,8 +94,8 @@ object ServiceController {
                 "name_uz, name_ru, name_eng, \n" +
                 "hint_uz, hint_ru, hint_eng, \n" +
                 "header_uz, header_ru, header_eng, \n" +
-                "priority) values \n" +
-                "(?, ?, ?, ?, ?, ?, ${service?.priority}) returning id"
+                "priority, image) values \n" +
+                "(?, ?, ?, ?, ?, ?, ${service?.priority}, ?) returning id"
 
         val id = DBManager.getConnection().sendPreparedStatementAwait(query,
             arrayListOf(
@@ -112,9 +114,10 @@ object ServiceController {
                 service?.header?.uz,
                 service?.header?.ru,
                 service?.header?.eng,
+                service?.image
             )
         ).rows.getOrNull(0)?.getInt("id")
-        AdventuresController.addAll(adventures = service?.adventures, serviceId = id)
+        AdvantageController.addAll(advantages  = service?.advantages, serviceId = id)
         return id
     }
 
@@ -125,7 +128,7 @@ object ServiceController {
                 "name_uz = ?, name_ru = ?, name_eng = ?, " +
                 "hint_uz = ?, hint_ru = ?, hint_eng = ?, " +
                 "header_uz = ?, header_ru = ?, header_eng = ?, " +
-                "priority = ${service?.priority} where id = ${service?.id} and not is_deleted"
+                "priority = ${service?.priority} , image = ? where id = ${service?.id} and not is_deleted"
 
         DBManager.getConnection().sendPreparedStatementAwait(query, arrayListOf(
             service?.title?.uz,
@@ -143,9 +146,10 @@ object ServiceController {
             service?.header?.uz,
             service?.header?.ru,
             service?.header?.eng,
+            service?.image
         ))
-        AdventuresController.delete(AdventuresModel(serviceId = service?.id))
-        AdventuresController.addAll(service?.adventures, serviceId = service?.id)
+        AdvantageController.delete(AdvantageModel(serviceId = service?.id))
+        AdvantageController.addAll(service?.advantages, serviceId = service?.id)
         return true
     }
 
