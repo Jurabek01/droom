@@ -10,6 +10,7 @@ import io.mimsoft.about.routeToAbout
 import io.mimsoft.admin.routeToAdmin
 import io.mimsoft.advantege.routToAdventure
 import io.mimsoft.contact.routeToContact
+import io.mimsoft.data.routeToData
 import io.mimsoft.feedback.routeToFeedback
 import io.mimsoft.file.routeToFile
 import io.mimsoft.header.routeToHeader
@@ -41,6 +42,7 @@ fun Application.configureRouting() {
             routeToPortfolio()
             routeToHeader()
             routeToSession()
+            routeToData()
 
             routToAdventure()
         }

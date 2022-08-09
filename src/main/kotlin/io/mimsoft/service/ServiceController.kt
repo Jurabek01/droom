@@ -48,6 +48,30 @@ object ServiceController {
         }
     }
 
+    suspend fun getAllMainPage(): List<ServiceModel?> {
+        val query = "select id , image, " +
+                "title_uz, title_ru, title_eng, " +
+                "name_uz, name_ru, name_eng " +
+                "from service " +
+                "where not is_deleted order by priority"
+        return DBManager.getConnection().sendPreparedStatementAwait(query, arrayListOf()).rows.map {
+            ServiceModel(
+                id = it.getInt("id"),
+                title = ContentModel(
+                    uz = it.getString("title_uz"),
+                    ru = it.getString("title_ru"),
+                    eng = it.getString("title_eng"),
+                ),
+                name = ContentModel(
+                    uz = it.getString("name_uz"),
+                    ru = it.getString("name_ru"),
+                    eng = it.getString("name_eng")
+                ),
+                image = it.getString("image")
+            )
+        }
+    }
+
     suspend fun get(id: Int?): ServiceModel? {
         val query = "select * from service where id = $id and not is_deleted"
 
@@ -117,7 +141,7 @@ object ServiceController {
                 service?.image
             )
         ).rows.getOrNull(0)?.getInt("id")
-        AdvantageController.addAll(advantages  = service?.advantages, serviceId = id)
+        AdvantageController.addAll(advantages = service?.advantages, serviceId = id)
         return id
     }
 

@@ -6,9 +6,13 @@ import io.mimsoft.utils.sendPreparedStatementAwait
 
 object PortfolioController {
 
-    suspend fun getAll(serviceId: Int? = null): List<PortfolioModel?> {
+    suspend fun getAll(
+        serviceId: Int? = null,
+        top: Boolean? = null,
+    ): List<PortfolioModel?> {
         val query = "select * from portfolio  where not is_deleted " +
-                (if (serviceId != null) "and service_id = $serviceId \n" else "") +
+                (if (serviceId != null) " and service_id = $serviceId \n" else "") +
+                (if (top != null) "and is_top = $top \n" else "") +
                 "order by priority"
 
         return DBManager.getConnection().sendPreparedStatementAwait(query, arrayListOf()).rows.map {
@@ -26,7 +30,8 @@ object PortfolioController {
                     eng = it.getString("body_eng"),
                 ),
                 image = it.getString("image"),
-                serviceId = it.getInt("service_id")
+                serviceId = it.getInt("service_id"),
+                top = it.getBoolean("is_top")
             )
         }
     }
@@ -48,15 +53,16 @@ object PortfolioController {
                     ru = it.getString("body_ru"),
                     eng = it.getString("body_eng"),
                 ),
-                image = it.getString("image")
+                image = it.getString("image"),
+                top = it.getBoolean("is_top")
             )
         }
     }
 
     suspend fun add(portfolio: PortfolioModel?): Boolean {
         val query = "insert into portfolio (priority, title_uz, title_ru, title_eng, \n" +
-                "body_uz, body_ru, body_eng, image, service_id) values (${portfolio?.priority}, \n" +
-                "?, ?, ?, ?, ?, ?, ?, ${portfolio?.serviceId}) "
+                "body_uz, body_ru, body_eng, image, service_id, is_top) values (${portfolio?.priority}, \n" +
+                "?, ?, ?, ?, ?, ?, ?, ${portfolio?.serviceId},${portfolio?.top}) "
 
         DBManager.getConnection().sendPreparedStatementAwait(query,
             arrayListOf(
@@ -76,7 +82,10 @@ object PortfolioController {
     suspend fun edit(portfolio: PortfolioModel?): Boolean {
         val query = "update portfolio set title_uz = ?, title_ru = ?, title_eng = ?, \n" +
                 "body_uz = ?, body_ru = ?, body_eng = ?, image = ?, \n" +
-                "priority = ${portfolio?.priority}, service_id = ${portfolio?.serviceId} where id = ${portfolio?.id} and not is_deleted"
+                "priority = ${portfolio?.priority}, " +
+                "service_id = ${portfolio?.serviceId}, " +
+                "is_top = ${portfolio?.top} " +
+                "where id = ${portfolio?.id} and not is_deleted"
 
         DBManager.getConnection().sendPreparedStatementAwait(query, arrayListOf(
             portfolio?.title?.uz,

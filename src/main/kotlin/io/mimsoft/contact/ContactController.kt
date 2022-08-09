@@ -13,13 +13,13 @@ object ContactController {
                 number = it.getString("number"),
                 address = it.getString("address"),
                 lat = it.getDouble("lat"),
-                lang = it.getDouble("lang")
+                long = it.getDouble("lang")
             )
         }
     }
 
     suspend fun add(contact: ContactModel?): Boolean{
-        val query = "insert into contact (number, address, lat, lang) values (?, ?, ${contact?.lat}, ${contact?.lang})"
+        val query = "insert into contact (number, address, lat, lang) values (?, ?, ${contact?.lat}, ${contact?.long})"
 
         DBManager.getConnection().sendPreparedStatementAwait("delete from contact where true", arrayListOf())
 
